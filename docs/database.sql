@@ -275,6 +275,7 @@ CREATE TABLE `employee` (
     `id_card` VARCHAR(20) COMMENT '身份证号',
     `salary` DECIMAL(10,2) COMMENT '薪资',
     `hire_date` DATE COMMENT '入职日期',
+    `employment_type` TINYINT DEFAULT 0 COMMENT '用工类型: 0-全职 1-兼职',
     `status` TINYINT DEFAULT 1 COMMENT '状态: 0-离职 1-在职',
     `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
