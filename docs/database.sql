@@ -269,6 +269,8 @@ CREATE TABLE `position_permission` (
 CREATE TABLE `employee` (
     `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '员工ID',
     `user_id` BIGINT NOT NULL COMMENT '用户ID',
+    `username` VARCHAR(50) NOT NULL UNIQUE COMMENT '账号',
+    `password` VARCHAR(255) NOT NULL COMMENT '密码',
     `position_id` BIGINT COMMENT '职位ID',
     `name` VARCHAR(50) NOT NULL COMMENT '姓名',
     `phone` VARCHAR(20) COMMENT '手机号',
