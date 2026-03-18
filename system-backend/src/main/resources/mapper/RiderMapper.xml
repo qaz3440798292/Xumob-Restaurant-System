@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xumob.restaurant.mapper.RiderMapper">
+    <resultMap id="riderResultMap" type="Rider">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, name, phone, status, create_time, update_time
+    </sql>
+
+    <select id="selectByRiderId" resultMap="riderResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rider
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="selectByRiderUserId" resultMap="riderResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rider
+        <where>
+            user_id = #{userId}
+        </where>
+    </select>
+
+    <insert id="createRider" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO rider (user_id, name, phone, status, create_time, update_time)
+        VALUES (#{userId}, #{name}, #{phone}, #{status}, #{createTime}, #{updateTime})
+    </insert>
+
+    <select id="selectAllRiders" resultMap="riderResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rider
+    </select>
+
+    <select id="selectRiderByUsername" resultMap="riderResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rider
+        <where>
+            user_id IN (
+            SELECT id FROM sys_user WHERE username = #{username}
+            )
+        </where>
+    </select>
+</mapper>
