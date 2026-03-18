@@ -2,5 +2,6 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/docs/database.sql" value="97fc1708-d03a-45d2-a4f6-61783db6bb3a" />
+    <file url="file://$PROJECT_DIR$/system-backend/src/main/resources/mapper/SysUserMapper.xml" value="97fc1708-d03a-45d2-a4f6-61783db6bb3a" />
   </component>
 </project>

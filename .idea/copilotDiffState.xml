@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="/SecurityConfiguration (snapshot).java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/SecurityConfiguration (snapshot).java" />
+              <option name="originalContent" value="package cn.xumob.restaurant.config;&#10;&#10;import org.springframework.context.annotation.Configuration;&#10;import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;&#10;&#10;@Configuration&#10;@EnableWebSecurity&#10;public class SecurityConfiguration {&#10;    &#10;    &#10;}&#10;" />
+              <option name="updatedContent" value="package cn.xumob.restaurant.config;&#10;&#10;import org.springframework.context.annotation.Bean;&#10;import org.springframework.context.annotation.Configuration;&#10;import org.springframework.security.config.annotation.web.builders.HttpSecurity;&#10;import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;&#10;import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;&#10;import org.springframework.security.crypto.password.PasswordEncoder;&#10;import org.springframework.security.web.SecurityFilterChain;&#10;import org.springframework.web.cors.CorsConfiguration;&#10;import org.springframework.web.cors.CorsConfigurationSource;&#10;import org.springframework.web.cors.UrlBasedCorsConfigurationSource;&#10;&#10;import java.util.Arrays;&#10;&#10;@Configuration&#10;@EnableWebSecurity&#10;public class SecurityConfiguration {&#10;&#10;    /**&#10;     * 密码编码器&#10;     */&#10;    @Bean&#10;    public PasswordEncoder passwordEncoder() {&#10;        return new BCryptPasswordEncoder();&#10;    }&#10;&#10;    /**&#10;     * CORS 配置&#10;     */&#10;    @Bean&#10;    public CorsConfigurationSource corsConfigurationSource() {&#10;        CorsConfiguration configuration = new CorsConfiguration();&#10;        configuration.setAllowedOrigins(Arrays.asList(&quot;*&quot;));&#10;        configuration.setAllowedMethods(Arrays.asList(&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;));&#10;        configuration.setAllowedHeaders(Arrays.asList(&quot;*&quot;));&#10;        configuration.setAllowCredentials(false);&#10;        configuration.setMaxAge(3600L);&#10;&#10;        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();&#10;        source.registerCorsConfiguration(&quot;/**&quot;, configuration);&#10;        return source;&#10;    }&#10;&#10;    /**&#10;     * Security 过滤链配置&#10;     */&#10;    @Bean&#10;    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {&#10;        http&#10;                // 启用 CORS&#10;                .cors(cors -&gt; cors.configurationSource(corsConfigurationSource()))&#10;                // 禁用 CSRF（REST API 通常不需要）&#10;                .csrf(csrf -&gt; csrf.disable())&#10;                // 配置授权规则&#10;                .authorizeHttpRequests(authz -&gt; authz&#10;                        // 允许所有 OPTIONS 请求&#10;                        .requestMatchers(&quot;/**&quot;).permitAll()&#10;                )&#10;                // 使用 HTTP Basic 认证&#10;                .httpBasic(basic -&gt; {});&#10;&#10;        return http.build();&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
