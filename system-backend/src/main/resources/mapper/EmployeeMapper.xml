@@ -32,7 +32,7 @@
         </where>
     </select>
 
-    <select id="selectByEmployeeUserId" resultMap="employeeMapper">
+    <select id="selectByUserId" resultMap="employeeMapper">
         SELECT
         <include refid="Base_Column_List" />
         FROM employee

@@ -16,7 +16,7 @@ spring:
     password: guest
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.example.systembackend.entity
+  type-aliases-package: cn.xumob.restaurant.entity
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

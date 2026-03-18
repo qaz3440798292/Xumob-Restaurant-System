@@ -25,7 +25,7 @@ public class RiderServiceImpl implements RiderService {
 
     @Override
     public Rider getRiderByUserId(Long userId) {
-        return riderMapper.selectByRiderUserId(userId);
+        return riderMapper.selectByUserId(userId);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class RiderServiceImpl implements RiderService {
 
     @Override
     public Rider getRiderByUsername(String username) {
-        return riderMapper.selectRiderByUsername(username);
+        return riderMapper.selectByUsername(username);
     }
 }

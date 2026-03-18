@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeByUserId(Long userId) {
-        return employeeMapper.selectByEmployeeUserId(userId);
+        return employeeMapper.selectByUserId(userId);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeByUsername(String username) {
-        return employeeMapper.selectEmployeeByUsername(username);
+        return employeeMapper.selectByUsername(username);
     }
 }

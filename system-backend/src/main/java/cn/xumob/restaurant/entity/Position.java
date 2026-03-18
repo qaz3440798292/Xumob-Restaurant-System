@@ -23,6 +23,12 @@ public class Position implements Serializable {
     @Schema(description = "职位名称")
     private String name;
 
+    @Schema(description = "职位代码")
+    private String code;
+
+    @Schema(description = "职级(越大越高)")
+    private Integer level;
+
     @Schema(description = "职位描述")
     private String description;
 

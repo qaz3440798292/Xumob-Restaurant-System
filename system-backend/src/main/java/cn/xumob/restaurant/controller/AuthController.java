@@ -1,56 +1,70 @@
 package cn.xumob.restaurant.controller;
 
 import cn.xumob.restaurant.dto.LoginDTO;
-import cn.xumob.restaurant.dto.LoginResponseDTO;
-import cn.xumob.restaurant.dto.UserContext;
-import cn.xumob.restaurant.util.JwtUtil;
+import cn.xumob.restaurant.security.CustomUserDetailsService;
+import cn.xumob.restaurant.security.SecurityUser;
 import cn.xumob.restaurant.vo.ResultVO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * 认证接口
+ */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
+@Tag(name = "认证管理")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationManager authManager;
+    private final CustomUserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Value("${jwt.expiration:86400000}")
-    private Long accessTokenExpiration;
-
-    @Value("${jwt.refresh-expiration:604800000}")
-    private Long refreshTokenExpiration;
-
+    /**
+     * 登录
+     * 
+     * POST /api/v1/auth/login
+     * Header: X-Login-Type: EMPLOYEE / RIDER / CUSTOMER
+     * Body: {"username": "xxx", "password": "xxx"}
+     */
     @PostMapping("/login")
-    public ResultVO<LoginResponseDTO> login(LoginDTO loginDTO) {
-        UserContext.setType(loginDTO.getType());
+    @Operation(summary = "用户登录")
+    public ResultVO<?> login(@RequestHeader("X-Login-Type") String loginType,
+                            @Valid @RequestBody LoginDTO loginDTO,
+                            HttpServletRequest request) {
+        try {
+            // 1. 根据登录类型加载用户
+            SecurityUser user = (SecurityUser) userDetailsService.loadUserByUsername(
+                    loginDTO.getUsername(), loginType);
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                loginDTO.getUsername(),
-                loginDTO.getPassword()
-        );
+            // 2. 验证密码
+            if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+                return ResultVO.unauthorized("密码错误");
+            }
 
-        Authentication authentication = authManager.authenticate(token);
+            // 3. 设置 SecurityContext（用于后续权限验证）
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    user,
+                    user.getPassword(),
+                    user.getAuthorities()
+            );
+            SecurityContext context = SecurityContextHolder.getContext();
+            context.setAuthentication(authentication);
+            request.getSession(true).setAttribute("SPRING_SECURITY_CONTEXT", context);
 
-        // 生成 Access Token 和 Refresh Token
-        String accessToken = JwtUtil.generateAccessToken(authentication);
-        String refreshToken = JwtUtil.generateRefreshToken(authentication);
-
-        // 构建登录响应
-        LoginResponseDTO response = LoginResponseDTO.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .tokenType("Bearer")
-                .expiresIn(accessTokenExpiration / 1000) // 转换为秒
-                .refreshExpiresIn(refreshTokenExpiration / 1000) // 转换为秒
-                .build();
-
-        return ResultVO.success("登录成功", response);
+            // 4. 返回用户信息
+            return ResultVO.success("登录成功");
+        } catch (AuthenticationException e) {
+            return ResultVO.unauthorized("账号不存在或密码错误");
+        }
     }
 }
