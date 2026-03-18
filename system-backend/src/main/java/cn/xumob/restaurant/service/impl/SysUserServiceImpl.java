@@ -17,12 +17,12 @@ public class SysUserServiceImpl implements SysUserService {
     private final SysUserMapper sysUserMapper;
 
     @Override
-    public List<SysUser> selectByUserId(Long id) {
+    public SysUser selectByUserId(Long id) {
         return sysUserMapper.selectByUserId(id);
     }
 
     @Override
-    public List<SysUser> selectByUsername(String username) {
+    public SysUser selectByUsername(String username) {
         return sysUserMapper.selectByUsername(username);
     }
 

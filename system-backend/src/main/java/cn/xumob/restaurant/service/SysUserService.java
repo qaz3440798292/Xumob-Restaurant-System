@@ -7,9 +7,9 @@ import java.util.List;
 /** 顾客账号服务接口 */
 public interface SysUserService {
 
-    List<SysUser> selectByUserId(Long id);
+    SysUser selectByUserId(Long id);
 
-    List<SysUser> selectByUsername(String username);
+    SysUser selectByUsername(String username);
 
     boolean createUser(SysUser sysUser);
 

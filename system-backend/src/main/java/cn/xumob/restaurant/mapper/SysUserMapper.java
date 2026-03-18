@@ -9,9 +9,9 @@ import java.util.List;
 @Mapper
 public interface SysUserMapper {
 
-    List<SysUser> selectByUserId(Long id);
+    SysUser selectByUserId(Long id);
 
-    List<SysUser> selectByUsername(String username);
+    SysUser selectByUsername(String username);
 
     int createUser(SysUser sysUser);
 
