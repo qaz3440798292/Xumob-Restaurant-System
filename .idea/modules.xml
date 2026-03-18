@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Xumob-Restaurant-System.iml" filepath="$PROJECT_DIR$/Xumob-Restaurant-System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/system-frontend/system-frontend.iml" filepath="$PROJECT_DIR$/system-frontend/system-frontend.iml" />
     </modules>
   </component>
 </project>
