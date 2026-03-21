@@ -3,6 +3,7 @@ package cn.xumob.restaurant.exception;
 import cn.xumob.restaurant.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -44,6 +45,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InsufficientPositionLevelException.class)
     public ResultVO<?> handleInsufficientPositionLevelException(InsufficientPositionLevelException e) {
         log.error("职位级别不足: {}", e.getMessage());
-        return ResultVO.error(e.getMessage());
+        // 职位级别不足返回 403 Forbidden
+        return ResultVO.forbidden(e.getMessage());
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResultVO<?> handleAuthorizationDeniedException(AuthorizationDeniedException e) {
+        log.error("权限不足: {}", e.getMessage());
+        return ResultVO.forbidden(e.getMessage());
     }
 }

@@ -40,7 +40,6 @@ public class AdminController {
 
     /**
      * 值班主管及以上权限 - 获取值班概要
-     * 包括: 值班主管、顾客体验经理、餐厅总经理
      */
     @GetMapping("/duty/summary")
     @PreAuthorize("@ss.hasPositionAbove('QSC_SHIFT_LEADER')")
