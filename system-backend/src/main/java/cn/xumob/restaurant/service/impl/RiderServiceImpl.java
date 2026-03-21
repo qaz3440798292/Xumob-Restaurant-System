@@ -24,11 +24,6 @@ public class RiderServiceImpl implements RiderService {
     }
 
     @Override
-    public Rider getRiderByUserId(Long userId) {
-        return riderMapper.selectByUserId(userId);
-    }
-
-    @Override
     @Transactional
     public boolean createRider(Rider rider) {
         int result = riderMapper.createRider(rider);

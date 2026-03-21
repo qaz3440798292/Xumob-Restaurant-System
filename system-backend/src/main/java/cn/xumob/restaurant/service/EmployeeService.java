@@ -18,14 +18,6 @@ public interface EmployeeService {
     Employee getEmployeeById(Long id);
 
     /**
-     * 根据用户ID查询员工信息
-     *
-     * @param userId 用户ID
-     * @return 员工信息
-     */
-    Employee getEmployeeByUserId(Long userId);
-
-    /**
      * 创建员工
      *
      * @param employee 员工信息

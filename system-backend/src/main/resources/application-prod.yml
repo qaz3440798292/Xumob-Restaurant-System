@@ -1,0 +1,4 @@
+# 生产模式配置
+app:
+  encryption:
+    required: true  # 生产模式需要加密

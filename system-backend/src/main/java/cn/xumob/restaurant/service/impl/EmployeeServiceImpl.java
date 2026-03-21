@@ -24,11 +24,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeByUserId(Long userId) {
-        return employeeMapper.selectByUserId(userId);
-    }
-
-    @Override
     @Transactional
     public boolean createEmployee(Employee employee) {
         int result = employeeMapper.createEmployee(employee);

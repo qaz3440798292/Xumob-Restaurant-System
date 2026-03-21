@@ -225,15 +225,13 @@ CREATE TABLE `coupon` (
 -- 骑手表
 CREATE TABLE `rider` (
     `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '骑手ID',
-    `user_id` BIGINT COMMENT '用户ID(可为空)',
     `username` VARCHAR(50) NOT NULL UNIQUE COMMENT '账号',
     `password` VARCHAR(255) NOT NULL COMMENT '密码',
     `name` VARCHAR(50) NOT NULL COMMENT '姓名',
     `phone` VARCHAR(20) NOT NULL COMMENT '手机号',
     `status` TINYINT DEFAULT 1 COMMENT '状态: 0-下线 1-上线',
     `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    FOREIGN KEY (`user_id`) REFERENCES `sys_user`(`id`)
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='骑手表';
 
 -- =============================================
@@ -272,7 +270,6 @@ CREATE TABLE `position_permission` (
 -- 员工表
 CREATE TABLE `employee` (
     `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '员工ID',
-    `user_id` BIGINT NOT NULL COMMENT '用户ID',
     `username` VARCHAR(50) NOT NULL UNIQUE COMMENT '账号',
     `password` VARCHAR(255) NOT NULL COMMENT '密码',
     `position_id` BIGINT COMMENT '职位ID',
@@ -285,7 +282,6 @@ CREATE TABLE `employee` (
     `status` TINYINT DEFAULT 1 COMMENT '状态: 0-离职 1-在职',
     `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    FOREIGN KEY (`user_id`) REFERENCES `sys_user`(`id`),
     FOREIGN KEY (`position_id`) REFERENCES `position`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='员工表';
 

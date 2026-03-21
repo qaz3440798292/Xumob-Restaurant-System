@@ -20,11 +20,6 @@ public interface RiderMapper {
     Rider selectByUsername(String username);
 
     /**
-     * 根据用户ID查询骑手信息
-     */
-    Rider selectByUserId(Long userId);
-
-    /**
      * 创建骑手
      */
     int createRider(Rider rider);

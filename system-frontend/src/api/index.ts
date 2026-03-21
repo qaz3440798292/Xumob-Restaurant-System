@@ -1,3 +1,9 @@
+/**
+ * API 接口
+ * 
+ * 所有请求都通过 HTTPS 传输，登录注册密码根据后端配置决定是否加密
+ */
+
 // API 基础配置
 const BASE_URL = 'http://localhost:8080/api/v1'
 
@@ -55,7 +61,13 @@ async function request(url: string, options: RequestInit = {}): Promise<ApiRespo
   return data
 }
 
-// 登录
+/**
+ * 登录
+ * 
+ * @param username 用户名
+ * @param password 明文密码
+ * @param loginType 登录类型：EMPLOYEE / RIDER / CUSTOMER
+ */
 export async function login(username: string, password: string, loginType: string): Promise<ApiResponse> {
   return await request('/auth/login', {
     method: 'POST',
@@ -66,7 +78,11 @@ export async function login(username: string, password: string, loginType: strin
   })
 }
 
-// 注册
+/**
+ * 注册
+ * 
+ * @param data 注册信息
+ */
 export async function register(data: RegisterParams): Promise<ApiResponse> {
   return await request('/auth/register', {
     method: 'POST',
@@ -74,7 +90,9 @@ export async function register(data: RegisterParams): Promise<ApiResponse> {
   })
 }
 
-// 刷新Token
+/**
+ * 刷新Token
+ */
 export async function refreshToken(refreshToken: string, loginType: string): Promise<ApiResponse> {
   return await request('/auth/refresh', {
     method: 'POST',

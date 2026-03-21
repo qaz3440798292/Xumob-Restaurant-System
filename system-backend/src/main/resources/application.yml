@@ -17,6 +17,9 @@ spring:
     addresses: localhost:5672
     username: guest
     password: guest
+    publisher-confirm-type: correlated
+  profiles:
+    active: dev
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: cn.xumob.restaurant.entity

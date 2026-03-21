@@ -20,9 +20,6 @@ public class Rider implements Serializable {
     @Schema(description = "骑手ID")
     private Long id;
 
-    @Schema(description = "用户ID")
-    private Long userId;
-
     @Schema(description = "账号")
     private String username;
 

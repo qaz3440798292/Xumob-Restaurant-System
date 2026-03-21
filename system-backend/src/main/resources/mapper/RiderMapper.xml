@@ -4,7 +4,6 @@
 
     <resultMap id="riderResultMap" type="Rider">
         <id column="id" property="id"/>
-        <result column="user_id" property="userId"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="name" property="name"/>
@@ -15,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_id, username, password, name, phone, status, create_time, update_time
+        id, username, password, name, phone, status, create_time, update_time
     </sql>
 
     <select id="selectByRiderId" resultMap="riderResultMap">
@@ -32,16 +31,9 @@
         WHERE username = #{username}
     </select>
 
-    <select id="selectByUserId" resultMap="riderResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM rider
-        WHERE user_id = #{userId}
-    </select>
-
     <insert id="createRider" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO rider (user_id, username, password, name, phone, status, create_time, update_time)
-        VALUES (#{userId}, #{username}, #{password}, #{name}, #{phone}, #{status}, #{createTime}, #{updateTime})
+        INSERT INTO rider (username, password, name, phone, status, create_time, update_time)
+        VALUES (#{username}, #{password}, #{name}, #{phone}, #{status}, #{createTime}, #{updateTime})
     </insert>
 
     <select id="selectAllRiders" resultMap="riderResultMap">

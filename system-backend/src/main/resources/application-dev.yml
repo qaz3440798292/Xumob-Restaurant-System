@@ -1,0 +1,4 @@
+# 开发模式配置
+app:
+  encryption:
+    required: false  # 开发模式不需要加密

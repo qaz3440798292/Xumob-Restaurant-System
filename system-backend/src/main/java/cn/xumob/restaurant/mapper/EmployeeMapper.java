@@ -21,11 +21,6 @@ public interface EmployeeMapper {
     Employee selectByUsername(String username);
 
     /**
-     * 根据用户ID查询员工信息
-     */
-    Employee selectByUserId(Long userId);
-
-    /**
      * 创建员工
      */
     int createEmployee(Employee employee);

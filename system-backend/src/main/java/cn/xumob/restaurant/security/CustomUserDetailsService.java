@@ -91,7 +91,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 employee.getUsername(),
                 employee.getPassword(),
                 authorities,
-                employee.getUserId(),
+                employee.getId(),  // 员工使用自己的ID
                 "employee",
                 employee.getId(),
                 positionId,
@@ -117,7 +117,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 rider.getUsername(),
                 rider.getPassword(),
                 authorities,
-                rider.getUserId(),
+                rider.getId(),  // 骑手使用自己的ID
                 "rider",
                 rider.getId(),
                 null,

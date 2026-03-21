@@ -18,14 +18,6 @@ public interface RiderService {
     Rider getRiderById(Long id);
 
     /**
-     * 根据用户ID查询骑手信息
-     *
-     * @param userId 用户ID
-     * @return 骑手信息
-     */
-    Rider getRiderByUserId(Long userId);
-
-    /**
      * 创建骑手
      *
      * @param rider 骑手信息

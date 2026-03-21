@@ -3,7 +3,6 @@
 <mapper namespace="cn.xumob.restaurant.mapper.EmployeeMapper">
     <resultMap id="employeeMapper" type="Employee">
         <id column="id" property="id" />
-        <result column="user_id" property="userId" />
         <result column="username" property="username" />
         <result column="password" property="password" />
         <result column="position_id" property="positionId" />
@@ -19,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_id, username, password, position_id, name, phone, id_card, salary, hire_date, employment_type, status,
+        id, username, password, position_id, name, phone, id_card, salary, hire_date, employment_type, status,
         create_time, update_time
     </sql>
 
@@ -32,19 +31,10 @@
         </where>
     </select>
 
-    <select id="selectByUserId" resultMap="employeeMapper">
-        SELECT
-        <include refid="Base_Column_List" />
-        FROM employee
-        <where>
-            user_id = #{userId}
-        </where>
-    </select>
-
     <insert id="createEmployee" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO employee (user_id, username, password, position_id, name, phone, id_card, salary, hire_date,
+        INSERT INTO employee (username, password, position_id, name, phone, id_card, salary, hire_date,
             employment_type, status, create_time, update_time)
-        VALUES (#{userId}, #{username}, #{password}, #{positionId}, #{name}, #{phone}, #{idCard}, #{salary},
+        VALUES (#{username}, #{password}, #{positionId}, #{name}, #{phone}, #{idCard}, #{salary},
             #{hireDate}, #{employmentType}, #{status}, #{createTime}, #{updateTime})
     </insert>
 
@@ -54,7 +44,7 @@
         FROM employee
     </select>
 
-    <select id="selectEmployeeByUsername" resultMap="employeeMapper">
+    <select id="selectByUsername" resultMap="employeeMapper">
         SELECT
         <include refid="Base_Column_List"/>
         FROM employee
