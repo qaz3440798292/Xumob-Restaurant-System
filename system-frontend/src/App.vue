@@ -1,7 +1,22 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import AuthView from './views/AuthView.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <AuthView />
 </template>
+
+<style>
+/* 全局重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>

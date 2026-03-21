@@ -1,6 +1,6 @@
 spring:
   application:
-    name: system-backend
+    name: xumob-restaurant-system
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/restaurant_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
@@ -8,8 +8,11 @@ spring:
     password: qaz98188729
   data:
     redis:
-      url: redis://localhost:6379
+      host: 47.115.135.105
+      username: default
       password: qaz98188729
+      port: 6379
+
   rabbitmq:
     addresses: localhost:5672
     username: guest

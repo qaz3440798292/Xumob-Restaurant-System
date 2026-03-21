@@ -1,6 +1,7 @@
 package cn.xumob.restaurant.config;
 
 import cn.xumob.restaurant.security.CustomUserDetailsService;
+import cn.xumob.restaurant.security.filter.JwtAuthenticationFilter;
 import cn.xumob.restaurant.security.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +12,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Spring Security 配置
@@ -30,8 +33,8 @@ public class SecurityConfig {
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
-
     private final CustomUserDetailsService userDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /**
      * 密码加密器
@@ -66,19 +69,20 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // 禁用 CSRF（前后端分离）
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
 
-                // 不使用 Session
+                // 不使用 Session（无状态）
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
                 // 配置请求授权
                 .authorizeHttpRequests(auth -> auth
-                        // 公开接口 - 登录接口也公开，由 Controller 自己处理
+                        // 公开接口
                         .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/register",
+                                "/api/v1/auth/refresh",
                                 "/api/v1/auth/public/**",
                                 "/error"
                         ).permitAll()
@@ -96,8 +100,11 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                // 禁用默认的 formLogin，使用自定义登录接口
+                // 禁用默认 formLogin
                 .formLogin(form -> form.disable())
+
+                // 添加 JWT 认证过滤器
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
                 // 登出配置
                 .logout(logout -> logout
