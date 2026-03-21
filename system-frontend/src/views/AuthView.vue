@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { login, register } from '../api'
+import { showToast } from '../utils/toast'
 
 // 登录表单接口
 interface LoginForm {
@@ -69,7 +70,7 @@ async function handleLogin(): Promise<void> {
     localStorage.setItem('refreshToken', data.refreshToken)
     localStorage.setItem('userInfo', JSON.stringify(data))
     
-    alert('欢迎回来！')
+    showToast('欢迎回来！', 'success')
     
   } catch (error: unknown) {
     const e = error as Error
@@ -99,7 +100,7 @@ async function handleRegister(): Promise<void> {
       registerType: 'CUSTOMER'
     })
     
-    alert('注册成功！')
+    showToast('注册成功！', 'success')
     isRegister.value = false
     loginForm.username = registerForm.username
     loginForm.password = ''
